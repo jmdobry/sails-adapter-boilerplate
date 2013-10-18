@@ -8,7 +8,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install rethinkdb
 before_script:
-  - rethinkdb </dev/null &>/dev/null & disown
+#  - rethinkdb </dev/null &>/dev/null & disown
+  - rethinkdb &
   - node test/setup.js
 after_script:
   - killall rethinkdb

@@ -9,11 +9,13 @@ function after(err) {
 async.waterfall([
 	function (next) {
 		console.log('Connecting to test database');
-		r.connect({
-			host: '127.0.0.1',
-			port: 28015,
-			db: 'test'
-		}, next);
+		setTimeout(function () {
+			r.connect({
+				host: '127.0.0.1',
+				port: 28015,
+				db: 'test'
+			}, next);
+		}, 5);
 	},
 	function (conn, next) {
 		console.log('Connected to test database');
