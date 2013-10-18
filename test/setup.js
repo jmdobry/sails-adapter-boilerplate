@@ -8,6 +8,7 @@ function final(err) {
 }
 async.waterfall([
 	function (next) {
+		console.log('Connecting to test database');
 		r.connect({
 			host: 'localhost',
 			port: 28015,
@@ -15,12 +16,15 @@ async.waterfall([
 		}, next);
 	},
 	function (conn, next) {
+		console.log('Connected to test database');
+		console.log('Creating test tables');
 		r.tableCreate('post').run(conn, next);
 	},
 	function (result, next) {
 		if (result.created === 0) {
 			next('Failed to create "post" table');
 		} else {
+			console.log(result);
 			r.tableCreate('comment').run(conn, next);
 		}
 	},
@@ -28,12 +32,15 @@ async.waterfall([
 		if (result.created === 0) {
 			next('Failed to create "comment" table');
 		} else {
+			console.log(result);
 			r.tableCreate('user').run(conn, next);
 		}
 	},
 	function (result, next) {
 		if (result.created === 0) {
 			next('Failed to create "user" table');
+		} else {
+			console.log(result);
 		}
 	}
 ], final);
