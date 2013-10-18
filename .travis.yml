@@ -3,6 +3,13 @@ node_js:
   - "0.11"
   - "0.10"
   - "0.8"
+before_install:
+  - echo "yes" | sudo add-apt-repository ppa:rethinkdb/ppa
+  - sudo apt-get update
+  - sudo apt-get install rethinkdb
+  - sudo npm install -g rethinkdb
 before_script:
-  - brew install rethinkdb
-  - rethinkdb
+  - rethinkdb </dev/null &>/dev/null & disown
+  - node test/setup.js
+after_script:
+  - killall rethinkdb
