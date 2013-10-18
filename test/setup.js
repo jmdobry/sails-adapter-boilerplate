@@ -1,7 +1,7 @@
 var r = require('rethinkdb'),
 	async = require('async');
 
-function final(err) {
+function after(err) {
 	if (err) {
 		throw new Error(err);
 	}
@@ -10,7 +10,7 @@ async.waterfall([
 	function (next) {
 		console.log('Connecting to test database');
 		r.connect({
-			host: 'localhost',
+			host: '127.0.0.1',
 			port: 28015,
 			db: 'test'
 		}, next);
@@ -43,4 +43,4 @@ async.waterfall([
 			console.log(result);
 		}
 	}
-], final);
+], after);
