@@ -1,5 +1,8 @@
+'use strict';
+
 var r = require('rethinkdb'),
-	async = require('async');
+	async = require('async'),
+	connection;
 
 function after(err) {
 	if (err) {
@@ -15,19 +18,20 @@ async.waterfall([
 				port: 28015,
 				db: 'test'
 			}, next);
-		}, 5);
+		}, 10);
 	},
 	function (conn, next) {
+		connection = conn;
 		console.log('Connected to test database');
 		console.log('Creating test tables');
-		r.tableCreate('post').run(conn, next);
+		r.tableCreate('post').run(connection, next);
 	},
 	function (result, next) {
 		if (result.created === 0) {
 			next('Failed to create "post" table');
 		} else {
 			console.log(result);
-			r.tableCreate('comment').run(conn, next);
+			r.tableCreate('comment').run(connection, next);
 		}
 	},
 	function (result, next) {
@@ -35,7 +39,7 @@ async.waterfall([
 			next('Failed to create "comment" table');
 		} else {
 			console.log(result);
-			r.tableCreate('user').run(conn, next);
+			r.tableCreate('user').run(connection, next);
 		}
 	},
 	function (result, next) {
