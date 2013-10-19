@@ -48,7 +48,6 @@ async.waterfall([
 		} else {
 			console.log(result);
 			connection.close();
-			process.exit(0)
 		}
 	}
 ], after);
