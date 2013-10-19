@@ -47,7 +47,7 @@ async.waterfall([
 			next('Failed to create "user" table');
 		} else {
 			console.log(result);
-			r.close();
+			connection.close();
 			process.exit(0)
 		}
 	}
